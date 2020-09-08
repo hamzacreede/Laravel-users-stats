@@ -1,61 +1,138 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# vue-simple-translation
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+![Minion](https://img.shields.io/badge/vue-2.x-green)
+![Minion](https://img.shields.io/badge/build-passing-green)
+![Minion](https://img.shields.io/badge/license-MIT-red)
+![Minion](https://img.shields.io/badge/npm-v1.0.2-red)
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    npm i vue-simple-translation
+    
+## Usage
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Create a .js file containing keys and texts, then you can duplicate that content and edit the text of each key and put it in another file .js
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Examples
 
-## Learning Laravel
+## ar.js ( for the Arabic  text )
+ 
+``` js   
+    const ar = {
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+       Message : {
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+         read : "إظهار الرسائل" ,
 
-## Laravel Sponsors
+         write : "اكتب رسالة جديدة"
+       },
+      
+      //... other keys-text
+      
+      }
+      
+      export default ar; 
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Now Just copy the last code and place it on en.js then modify it according to our language ( for the English text )
 
-### Premium Partners
+``` js
+     const en = {
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+       Message : {
 
-## Contributing
+         read : "Show messages" ,
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+         write : "Write a new message"
+       },
+      
+      //... other keys-text
+      
+      }
+      
+      export default en; 
+```
 
-## Code of Conduct
+ ## Now in main.js file we need to save our plugin ( https://vuejs.org/v2/guide/plugins.html#Using-a-Plugin ) 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+``` js
 
-## Security Vulnerabilities
+    // /src/mains.js
+    import Vue from 'vue';
+    // Here You Can import your keys-text files 
+    // ( remember you can save your keys-text files anywhere you like for my case I choose to save them in /src/Lang/... )
+    import ar from './Lang/ar.js'
+    import en from './Lang/en.js'
+    
+    // then we import the plugin
+    import vueSimpleTranslation from 'vue-simple-translation';
+    
+    //end we use it with our keys-text files
+    Vue.use(vueSimpleTranslation ,{ar,en});
+    
+```
+## all we have to do is call the "vue-simple-translation" functions and see the magic
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+``` js  
+     //exp: test.vue
+     <template>
+       <p> {{$Lang('Message.read')}} </p> // result : Show messages
+     </template>
+```    
+### by default, the current language will be retrieved from your browser but you can change it
 
-## License
+``` js
+     <tempalte>
+        
+        // Here you can use a Dropdown on your toolbar to change Tranzlation using $ChangeCurrentLanguage() in my case i use Bootstrap v4.5
+        // https://getbootstrap.com/docs/4.5/components/dropdowns/  
+        // you are free to customize your drop-down menu
+        
+        <div class="dropdown">
+           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Dropdown button
+           </button>
+           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" v-for="(item, index) in items"  :key="index"  @click="$ChangeCurrentLanguage(item.value)" >
+             <a class="dropdown-item" href="#">{{ item.title }}</a>
+           </div>
+         </div>
+         
+     </template>
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+``` js
+     <script>
+     
+      export default {
+      
+        data: () => ({
+        
+         Translation_value_name : "Translation",
+
+         items:[
+           { title: 'العربية' , value:'ar'},
+           { title: 'English'  , value:'en'},  
+          ],
+          
+         }),
+
+        created(){
+
+           this.Translation_value_name = this.$GetFullUserLang() ? this.$GetFullUserLang()  : "Translation" ; 
+        }
+    
+      }
+      
+   </script>
+  
+ ```
+ 
+ ## Options
+ 
+ 
+| function	 | Description
+| ------:| -----------:|
+| $Lang('..')  | here you can display the translated texts by specifying the keys |
+| $ChangeCurrentLanguage('...') | change the current language. |
+| $GetFullUserLang()    | Get the full name of the current language , exp "English" |
+| $RightSideWindow()   | If the current language is Arabic, the function returns true otherwise it returns false |
