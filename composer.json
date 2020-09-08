@@ -1,0 +1,29 @@
+{
+    "name": "hamzadjebiri/laraveluserstats",
+    "description": "this package allows us to apply statistics on the users of our application , for example the number of users registered on our application..",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hamza",
+            "email": "djebirihamza95@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+        "psr-4": {
+            "HamzaDjebiri\\Laraveluserstats\\" : "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Barryvdh\\Debugbar\\ServiceProvider"
+            ],
+            "aliases": {
+                "Debugbar": "Barryvdh\\Debugbar\\Facade"
+            }
+        }
+    }
+}
